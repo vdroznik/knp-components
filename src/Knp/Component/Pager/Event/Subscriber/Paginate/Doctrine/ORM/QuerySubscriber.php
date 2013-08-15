@@ -25,14 +25,8 @@ class QuerySubscriber implements EventSubscriberInterface
     {
         if ($event->target instanceof Query) {
             // process count
-            $useDoctrineWalkers = false;
+            $useDoctrineWalkers = true;
             $useDoctrineOutputWalker = false;
-            if (version_compare(\Doctrine\ORM\Version::VERSION, '2.3.0', '>=')) {
-                $useDoctrineWalkers = true;
-                $useDoctrineOutputWalker = true;
-            } else if (version_compare(\Doctrine\ORM\Version::VERSION, '2.2.0', '>=')) {
-                $useDoctrineWalkers = true;
-            }
             if (($count = $event->target->getHint(self::HINT_COUNT)) !== false) {
                 $event->count = intval($count);
             } else {
